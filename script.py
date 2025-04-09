@@ -19,8 +19,10 @@ def parse_colors(text):
     lines = text.split("\n")
     for line in lines:
         if "-" in line:
-            german, english = map(str.strip, line.split("-"))
-            pairs.append((german, english))
+            parts = line.split("-")
+            if len(parts) == 2:
+                german, english = map(str.strip, parts)
+                pairs.append((german, english))
     return pairs
 
 def make_quiz(questions):
