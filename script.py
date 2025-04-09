@@ -18,11 +18,18 @@ def parse_colors(text):
     pairs = []
     lines = text.split("\n")
     for line in lines:
-        if "-" in line:
-            parts = line.split("-")
-            if len(parts) == 2:
-                german, english = map(str.strip, parts)
-                pairs.append((german, english))
+        line = line.strip()
+        if not line:
+            continue  # Skip empty lines
+        if "-" not in line:
+            st.warning(f"Skipping malformed line (no dash): '{line}'")
+            continue
+        parts = line.split("-")
+        if len(parts) != 2:
+            st.warning(f"Skipping malformed line (wrong number of dashes): '{line}'")
+            continue
+        german, english = map(str.strip, parts)
+        pairs.append((german, english))
     return pairs
 
 def make_quiz(questions):
