@@ -35,36 +35,51 @@ def extract_word_pairs(text):
     return pairs
 
 def run_quiz(pairs):
-    random.shuffle(pairs)
     if "q_index" not in st.session_state:
         st.session_state.q_index = 0
         st.session_state.score = 0
+        st.session_state.submitted = False
+        st.session_state.choices = {}
 
-    if st.session_state.q_index < len(pairs):
-        german, correct = pairs[st.session_state.q_index]
+    current_q = st.session_state.q_index
+    german, correct = pairs[current_q]
+
+    # Generate consistent options per question
+    if current_q not in st.session_state.choices:
         options = [correct]
         while len(options) < 4:
             _, fake = random.choice(pairs)
             if fake not in options:
                 options.append(fake)
         random.shuffle(options)
+        st.session_state.choices[current_q] = options
+    else:
+        options = st.session_state.choices[current_q]
 
-        st.write(f"**Q{st.session_state.q_index + 1}: What is the English translation of '{german}'?**")
-        choice = st.radio("Choose one:", options, key=f"choice_{st.session_state.q_index}")
-        if st.button("Submit"):
-            if choice == correct:
+    st.write(f"**Q{current_q + 1}: What is the English translation of '{german}'?**")
+    selected = st.radio("Choose one:", options, key=f"radio_{current_q}")
+
+    if not st.session_state.submitted:
+        if st.button("Submit Answer"):
+            st.session_state.submitted = True
+            if selected == correct:
                 st.success("Correct!")
                 st.session_state.score += 1
             else:
                 st.error(f"Wrong! Correct answer: {correct}")
-            st.session_state.q_index += 1
-            st.experimental_rerun()
     else:
+        if st.button("Next"):
+            st.session_state.q_index += 1
+            st.session_state.submitted = False
+            st.rerun()
+
+    if st.session_state.q_index >= len(pairs):
         st.success(f"Quiz Complete! Score: {st.session_state.score}/{len(pairs)}")
         if st.button("Restart"):
-            st.session_state.q_index = 0
-            st.session_state.score = 0
-            st.experimental_rerun()
+            for key in ["q_index", "score", "submitted", "choices"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+            st.rerun()
 
 # --- MAIN APP ---
 
