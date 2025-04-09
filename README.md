@@ -16,6 +16,12 @@ Ref:-
 
 raw.githubusercontent.com/(repo-pdf-file-link)
 
+only thing you have to remove from the url is blob before main.
+
+like this 
+
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/German_Pronouns_and_Possessives.pdf
+
 ### Future ideas:-
 • Make a module and release on pypi for german words dataset. 
 • Make a streamlit Quiz App 
