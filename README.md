@@ -17,7 +17,7 @@ Ref:-
 # Enter url in App
 
 
-https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/(pdf_name_in_this_repository)
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/Lang/main/(pdf_name_in_this_repository)
 
 Similarly you can enter any pdf on github by entering the url https://raw.githubusercontent.com/(User_name)/(Repo_name)/main/(pdf_name)
 
