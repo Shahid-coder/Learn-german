@@ -1,61 +1,84 @@
 import streamlit as st
+import requests
+import fitz  # PyMuPDF
 import random
 
-# Predefined German-English color pairs
-color_pairs = [
-    ("Rot", "Red"),
-    ("Blau", "Blue"),
-    ("Grün", "Green"),
-    ("Gelb", "Yellow"),
-    ("Orange", "Orange"),
-    ("Lila", "Purple"),
-    ("Rosa", "Pink"),
-    ("Braun", "Brown"),
-    ("Grau", "Gray"),
-    ("Schwarz", "Black"),
-    ("Weiß", "White"),
-    ("Hellblau", "Light Blue"),
-    ("Dunkelgrün", "Dark Green"),
-    ("Hellgrün", "Light Green"),
-    ("Dunkelblau", "Dark Blue"),
-    ("Beige", "Beige"),
-    ("Gold", "Gold"),
-    ("Silber", "Silver"),
-    ("Türkis", "Turquoise"),
-    ("Bunt", "Multicolored")
-]
+st.title("Auto Quiz Generator from GitHub PDF")
 
-st.title("German Colors Quiz")
+@st.cache_data
+def fetch_pdf_text(raw_url):
+    response = requests.get(raw_url)
+    with open("temp.pdf", "wb") as f:
+        f.write(response.content)
+    doc = fitz.open("temp.pdf")
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    return text
 
-# Shuffle and limit number of questions if needed
-random.shuffle(color_pairs)
+def extract_word_pairs(text):
+    pairs = []
+    lines = text.split("\n")
+    for line in lines:
+        try:
+            line = line.strip()
+            if not line or "-" not in line:
+                continue
+            parts = line.split("-")
+            if len(parts) != 2:
+                continue
+            german, english = map(str.strip, parts)
+            if german and english:
+                pairs.append((german, english))
+        except:
+            continue
+    return pairs
 
-if "score" not in st.session_state:
-    st.session_state.score = 0
-    st.session_state.q_index = 0
-
-if st.session_state.q_index < len(color_pairs):
-    german, correct_english = color_pairs[st.session_state.q_index]
-    options = [correct_english]
-    while len(options) < 4:
-        _, fake = random.choice(color_pairs)
-        if fake not in options:
-            options.append(fake)
-    random.shuffle(options)
-
-    st.write(f"**Q{st.session_state.q_index + 1}: What is the English translation of '{german}'?**")
-    choice = st.radio("Choose one:", options, key=f"q{st.session_state.q_index}")
-    if st.button("Submit Answer"):
-        if choice == correct_english:
-            st.success("Correct!")
-            st.session_state.score += 1
-        else:
-            st.error(f"Wrong! Correct answer: {correct_english}")
-        st.session_state.q_index += 1
-        st.experimental_rerun()
-else:
-    st.success(f"Quiz completed! Your final score: {st.session_state.score}/{len(color_pairs)}")
-    if st.button("Restart Quiz"):
-        st.session_state.score = 0
+def run_quiz(pairs):
+    random.shuffle(pairs)
+    if "q_index" not in st.session_state:
         st.session_state.q_index = 0
-        st.experimental_rerun()
+        st.session_state.score = 0
+
+    if st.session_state.q_index < len(pairs):
+        german, correct = pairs[st.session_state.q_index]
+        options = [correct]
+        while len(options) < 4:
+            _, fake = random.choice(pairs)
+            if fake not in options:
+                options.append(fake)
+        random.shuffle(options)
+
+        st.write(f"**Q{st.session_state.q_index + 1}: What is the English translation of '{german}'?**")
+        choice = st.radio("Choose one:", options, key=f"choice_{st.session_state.q_index}")
+        if st.button("Submit"):
+            if choice == correct:
+                st.success("Correct!")
+                st.session_state.score += 1
+            else:
+                st.error(f"Wrong! Correct answer: {correct}")
+            st.session_state.q_index += 1
+            st.experimental_rerun()
+    else:
+        st.success(f"Quiz Complete! Score: {st.session_state.score}/{len(pairs)}")
+        if st.button("Restart"):
+            st.session_state.q_index = 0
+            st.session_state.score = 0
+            st.experimental_rerun()
+
+# --- MAIN APP ---
+
+pdf_url = st.text_input("Enter RAW GitHub PDF URL:")
+
+if pdf_url:
+    try:
+        with st.spinner("Reading and extracting..."):
+            pdf_text = fetch_pdf_text(pdf_url)
+            word_pairs = extract_word_pairs(pdf_text)
+        if word_pairs:
+            st.success(f"Loaded {len(word_pairs)} word pairs.")
+            run_quiz(word_pairs)
+        else:
+            st.warning("No valid word pairs found in the PDF.")
+    except Exception as e:
+        st.error(f"Error reading PDF: {e}")
