@@ -3,22 +3,20 @@ import requests
 import fitz  # PyMuPDF
 import random
 
+st.title("Auto Quiz Generator from GitHub PDF")
+
 @st.cache_data
-def load_pdf_text(url):
-    response = requests.get(url)
-    with open("colors.pdf", "wb") as f:
+def fetch_pdf_text(raw_url):
+    response = requests.get(raw_url)
+    with open("temp.pdf", "wb") as f:
         f.write(response.content)
-    doc = fitz.open("colors.pdf")
+    doc = fitz.open("temp.pdf")
     text = ""
     for page in doc:
         text += page.get_text()
     return text
-st.subheader("Debug: Raw PDF Text Preview")
-lines = raw_text.split("\n")
-for i, line in enumerate(lines):
-    st.write(f"{i+1}: {repr(line)}")
-    
-def parse_colors(text):
+
+def extract_word_pairs(text):
     pairs = []
     lines = text.split("\n")
     for line in lines:
@@ -32,38 +30,55 @@ def parse_colors(text):
             german, english = map(str.strip, parts)
             if german and english:
                 pairs.append((german, english))
-        except Exception as e:
-            st.warning(f"Error processing line: {line} | Error: {e}")
+        except:
+            continue
     return pairs
 
-def make_quiz(questions):
-    random.shuffle(questions)
-    for idx, (german, correct_english) in enumerate(questions):
-        options = [correct_english]
+def run_quiz(pairs):
+    random.shuffle(pairs)
+    if "q_index" not in st.session_state:
+        st.session_state.q_index = 0
+        st.session_state.score = 0
+
+    if st.session_state.q_index < len(pairs):
+        german, correct = pairs[st.session_state.q_index]
+        options = [correct]
         while len(options) < 4:
-            _, fake = random.choice(questions)
+            _, fake = random.choice(pairs)
             if fake not in options:
                 options.append(fake)
         random.shuffle(options)
 
-        st.write(f"**Q{idx+1}: What is the English translation of '{german}'?**")
-        choice = st.radio("Choose one:", options, key=f"q{idx}")
-        if st.button(f"Submit Answer {idx+1}", key=f"submit{idx}"):
-            if choice == correct_english:
+        st.write(f"**Q{st.session_state.q_index + 1}: What is the English translation of '{german}'?**")
+        choice = st.radio("Choose one:", options, key=f"choice_{st.session_state.q_index}")
+        if st.button("Submit"):
+            if choice == correct:
                 st.success("Correct!")
+                st.session_state.score += 1
             else:
-                st.error(f"Wrong! Correct answer: {correct_english}")
-            st.write("---")
-
-# Streamlit App
-st.title("German Colors Quiz")
-
-pdf_url = st.text_input("Enter GitHub raw PDF URL:")
-if pdf_url:
-    raw_text = load_pdf_text(pdf_url)
-    color_pairs = parse_colors(raw_text)
-    if color_pairs:
-        make_quiz(color_pairs)
+                st.error(f"Wrong! Correct answer: {correct}")
+            st.session_state.q_index += 1
+            st.experimental_rerun()
     else:
-        st.warning("No valid color translations found in the PDF.")
-      
+        st.success(f"Quiz Complete! Score: {st.session_state.score}/{len(pairs)}")
+        if st.button("Restart"):
+            st.session_state.q_index = 0
+            st.session_state.score = 0
+            st.experimental_rerun()
+
+# --- MAIN APP ---
+
+pdf_url = st.text_input("Enter RAW GitHub PDF URL:")
+
+if pdf_url:
+    try:
+        with st.spinner("Reading and extracting..."):
+            pdf_text = fetch_pdf_text(pdf_url)
+            word_pairs = extract_word_pairs(pdf_text)
+        if word_pairs:
+            st.success(f"Loaded {len(word_pairs)} word pairs.")
+            run_quiz(word_pairs)
+        else:
+            st.warning("No valid word pairs found in the PDF.")
+    except Exception as e:
+        st.error(f"Error reading PDF: {e}")
