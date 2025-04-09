@@ -1,11 +1,13 @@
 # Learn-german
 
+# Quiz app is live at
+
+https://learn-german.streamlit.app/
 
 
 
-
-
-please support me by giving a dollar. I will consider it a thanks.I am a student.
+# Support me
+Please support me by giving a dollar. I will consider it a thanks.I am a student.
 ![image](/bmc_qr.png)
 
 Ref:- 
@@ -15,9 +17,9 @@ Ref:-
 # Enter url in App
 
 
-https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/(pdf name of this repository)
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/(pdf_name_of_this_repository)
 
-Similarly you can enter any pdf on github by entering the url https://raw.githubusercontent.com/(User name)/(Repo name)/main/(pdf name)
+Similarly you can enter any pdf on github by entering the url https://raw.githubusercontent.com/(User_name)/(Repo_name)/main/(pdf_name)
 
 ### Future ideas:-
 • Make a module and release on pypi for german words dataset. 
