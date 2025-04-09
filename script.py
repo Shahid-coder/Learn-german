@@ -13,23 +13,27 @@ def load_pdf_text(url):
     for page in doc:
         text += page.get_text()
     return text
-
+st.subheader("Debug: Raw PDF Text Preview")
+lines = raw_text.split("\n")
+for i, line in enumerate(lines):
+    st.write(f"{i+1}: {repr(line)}")
+    
 def parse_colors(text):
     pairs = []
     lines = text.split("\n")
     for line in lines:
-        line = line.strip()
-        if not line:
-            continue  # Skip empty lines
-        if "-" not in line:
-            st.warning(f"Skipping malformed line (no dash): '{line}'")
-            continue
-        parts = line.split("-")
-        if len(parts) != 2:
-            st.warning(f"Skipping malformed line (wrong number of dashes): '{line}'")
-            continue
-        german, english = map(str.strip, parts)
-        pairs.append((german, english))
+        try:
+            line = line.strip()
+            if not line or "-" not in line:
+                continue
+            parts = line.split("-")
+            if len(parts) != 2:
+                continue
+            german, english = map(str.strip, parts)
+            if german and english:
+                pairs.append((german, english))
+        except Exception as e:
+            st.warning(f"Error processing line: {line} | Error: {e}")
     return pairs
 
 def make_quiz(questions):
