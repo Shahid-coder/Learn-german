@@ -12,6 +12,10 @@ Ref:-
 
 [Streamlit Deploy your apps Docx](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
 
+# Enter url
+
+raw.githubusercontent.com/(repo-pdf-file-link)
+
 ### Future ideas:-
 • Make a module and release on pypi for german words dataset. 
 • Make a streamlit Quiz App 
