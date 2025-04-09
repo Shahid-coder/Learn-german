@@ -41,6 +41,16 @@ def run_quiz(pairs):
         st.session_state.submitted = False
         st.session_state.choices = {}
 
+    total_questions = len(pairs)
+
+    if st.session_state.q_index >= total_questions:
+        st.success(f"Quiz Complete! Final Score: {st.session_state.score} / {total_questions}")
+        if st.button("Restart Quiz"):
+            for key in ["q_index", "score", "submitted", "choices"]:
+                st.session_state.pop(key, None)
+            st.rerun()
+        return  # Stop here
+
     current_q = st.session_state.q_index
     german, correct = pairs[current_q]
 
@@ -73,16 +83,7 @@ def run_quiz(pairs):
             st.session_state.submitted = False
             st.rerun()
 
-    if st.session_state.q_index >= len(pairs):
-        st.success(f"Quiz Complete! Score: {st.session_state.score}/{len(pairs)}")
-        if st.button("Restart"):
-            for key in ["q_index", "score", "submitted", "choices"]:
-                if key in st.session_state:
-                    del st.session_state[key]
-            st.rerun()
-
-# --- MAIN APP ---
-
+# MAIN UI
 pdf_url = st.text_input("Enter RAW GitHub PDF URL:")
 
 if pdf_url:
@@ -90,6 +91,7 @@ if pdf_url:
         with st.spinner("Reading and extracting..."):
             pdf_text = fetch_pdf_text(pdf_url)
             word_pairs = extract_word_pairs(pdf_text)
+
         if word_pairs:
             st.success(f"Loaded {len(word_pairs)} word pairs.")
             run_quiz(word_pairs)
@@ -97,3 +99,4 @@ if pdf_url:
             st.warning("No valid word pairs found in the PDF.")
     except Exception as e:
         st.error(f"Error reading PDF: {e}")
+        
