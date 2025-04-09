@@ -5,22 +5,19 @@
 
 
 
-please support me by giving a dollar. I will consider it a thanks.
+please support me by giving a dollar. I will consider it a thanks.I am a student.
 ![image](/bmc_qr.png)
 
 Ref:- 
 
 [Streamlit Deploy your apps Docx](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
 
-# Enter url
+# Enter url in App
 
-raw.githubusercontent.com/(repo-pdf-file-link)
 
-only thing you have to remove from the url is blob before main.
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/(pdf name of this repository)
 
-like this 
-
-https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/German_Pronouns_and_Possessives.pdf
+Similarly you can enter any pdf on github by entering the url https://raw.githubusercontent.com/(User name)/(Repo name)/main/(pdf name)
 
 ### Future ideas:-
 • Make a module and release on pypi for german words dataset. 
