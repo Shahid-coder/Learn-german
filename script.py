@@ -3,7 +3,7 @@ import requests
 import fitz  # PyMuPDF
 import random
 
-st.title("Auto Quiz Generator from GitHub PDF")
+st.title("Learn German ")
 
 @st.cache_data
 def fetch_pdf_text(raw_url):
