@@ -25,7 +25,7 @@ Ref:-
 
 [Streamlit Deploy your apps Docx](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
 
-# Locally
+# On cloud App:- 
 ## Enter url in App
 ```
 https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/Lang/(pdf_name_in_this_repository)
