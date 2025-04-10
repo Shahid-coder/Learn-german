@@ -1,35 +1,3 @@
-# Learn-german
-
-# Quiz app is live at
-
-https://learn-german.streamlit.app/
-
-
-
-
-# Support me
-Please support me by giving a dollar. I will consider it a thanks.I am a student.
-![image](/bmc_qr.png)
-
-Ref:- 
-
-[Streamlit Deploy your apps Docx](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
-
-# Enter url in App
-
-
-https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/Lang/(pdf_name_in_this_repository)
-
-Similarly you can enter any pdf on github by entering the url https://raw.githubusercontent.com/(User_name)/(Repo_name)/main/(folder_name)/(pdf_name)
-
-## Sample Url to Enter
-https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/Lang/Phrases.pdf
-
-### Future ideas:-
-• Make a module and release on pypi for german words dataset. 
-• Make a streamlit Quiz App 
-• Download this github project locally.
-
 # Learn-german🦉
 This repo contains an introduction to german language for beginners.
 
@@ -41,6 +9,36 @@ This repo contains an introduction to german language for beginners.
 [Learn-german](https://github.com/Shahid-coder/Learn-german) is an end-to-end german language course for beginners.You can read german directly from pdf or take quizzes from the streamlit app.
 
 Learn-german was originally developed by shahid-coder.
+
+# Quiz app is live at 🫡🤫🫵
+
+https://learn-german.streamlit.app/
+
+
+
+
+# Support me 🥹
+Please support me by giving a dollar. I will consider it a thanks.I am a student.
+![image](/bmc_qr.png)
+
+Ref:- 
+
+[Streamlit Deploy your apps Docx](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)
+
+# Locally
+## Enter url in App
+```
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/Lang/(pdf_name_in_this_repository)
+```
+Similarly you can enter any pdf on github by entering the url 
+```
+https://raw.githubusercontent.com/(User_name)/(Repo_name)/main/(folder_name)/(pdf_name)
+```
+## Sample Url to Enter
+```
+https://raw.githubusercontent.com/Shahid-coder/Learn-german/main/Lang/Phrases.pdf
+```
+
 
 ## Install🔥
 This project uses PyMuPDF module to work with pdfs to make quizzes from them and streamlit etc. 
@@ -72,6 +70,12 @@ streamlit run script.py
 ```
 
 [see the streamlit docs for running the streamlit app](https://docs.streamlit.io/develop/concepts/architecture/run-your-app)
+
+# Future ideas:- 🗣️
+* Make a module and release on pypi for german words dataset. 
+* Make a streamlit Quiz App 
+* Give score card and certificate of excellence after submitting the quiz.
+* Implementing skip,mark and previous buttons.
 
 ## Release 🤫
 For latest release and source code in zip file see 
