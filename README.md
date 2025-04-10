@@ -56,7 +56,7 @@ To update to the latest version, add `--upgrade` flag to the above commands.
 #### To play this quiz type the following command in your terminal . But remember you have to download python in your system .visit python.org for download . 
 
 ```
-git clone https://github.com/Shahid-coder/Shahid-flappy-bird.git
+git clone https://github.com/Shahid-coder/Learn-german.git
 ```
 
 ```
