@@ -4,6 +4,7 @@ This repo contains an introduction to german language for beginners.
 [![Language: python](https://img.shields.io/github/languages/top/shahid-coder/Learn-german)](https://python.org)
 [![Apache 2.0 License](https://img.shields.io/github/license/shahid-coder/Learn-german)]([https://github.com/shahid-coder/Learn-german/main/LICENSE](https://github.com/Shahid-coder/Learn-german/main/LICENSE))
 [![GitHub contributors](https://img.shields.io/github/contributors/shahid-coder/Learn-german)](https://github.com/shahid-coder/Learn-german/graphs/contributors)
+[![version]](https://img.shields.io/github/version-1.2.3-blue)
 # Documentation📝
 
 [Learn-german](https://github.com/Shahid-coder/Learn-german) is an end-to-end german language course for beginners.You can read german directly from pdf or take quizzes from the streamlit app.
