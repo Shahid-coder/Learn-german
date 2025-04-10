@@ -73,6 +73,9 @@ streamlit run script.py
 
 [see the streamlit docs for running the streamlit app](https://docs.streamlit.io/develop/concepts/architecture/run-your-app)
 
+## Release 🤫
+For latest release and source code in zip file see 
+[link](https://github.com/Shahid-coder/Learn-german/releases/)
 ## Contribution guidelines🤝
 If you want to contribute to this repo, be sure to review the
 [contribution guidelines](CONTRIBUTING.md).
